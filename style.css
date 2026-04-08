@@ -1,0 +1,170 @@
+html,body{
+    height: 100%;
+    margin: 0;
+    scroll-behavior: smooth;
+}
+body {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #141313;
+    background: linear-gradient(180deg, rgb(10, 6, 6) 0%, rgba(8, 6, 6, 1) 35%, rgba(8, 5, 5, 1) 100%);
+    background-attachment: fixed;
+    margin: 0%;
+    padding: 0%;
+}
+
+.container {
+    max-width: 600px;
+    margin: 90px auto;
+    margin-left: 20px;
+    background: rgba(42, 42, 43, 0.9);    
+    padding: 20px;
+    border-radius: 10px;
+    border-color: rgb(94, 94, 94);
+    border-width: 2px;
+    border-style: solid;
+}
+
+h1 {
+    text-align: center;
+    color:white;
+}
+
+.total {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 10px;
+    background: #031c63;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition:all 0.25s ease;
+}
+
+button:hover {
+    background: #0b36ad;;
+}
+
+.gasto {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.gasto:last-child {
+    border-bottom: none;
+    color: white;
+}
+.titulo{
+    color:white;
+    margin-right: 1500px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.table{
+    margin: 0 auto;
+    width: fit-content;
+    max-height: fit-content;
+    background: rgb(1, 43, 56);
+    padding: 1px;
+    border-radius: 10px;
+    border-color: rgb(246, 246, 247);
+    border-width: 2px;
+    border-style: solid;
+    color: white;
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    box-shadow: rgba(158, 157, 157, 0.39) 0px 0px 10px;
+}
+input[type="number"]::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+table{
+    background-color: rgb(1, 43, 56);
+    border-collapse: collapse;
+    margin-top: 2px;
+}
+thead{
+    background: rgb(7, 19, 90);
+    color: white;
+}
+th, td{
+    padding: 8px 20px;
+    text-align: left;
+    color: white;
+    border-right: 1px solid rgb(255, 255, 255);
+    border-left: 1px solid rgb(255, 255, 255);
+    border-top: 1px solid rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+tbody tr{
+    border-bottom: 1px solid #eee;
+}
+h2{
+    color: white;
+    text-align: center;
+}
+.tabela-cont{
+    max-width: 500px;   /* largura menor */
+    margin: 20px auto;  /* centraliza */   /* evita quebrar layout */
+    margin-left: 100px;
+    
+}
+
+.tabela-numero table{
+    background-color:#04054248;
+    
+}
+.tabela-numero{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 1000px;
+    margin-left: 2%;
+    box-shadow: 0px 4px 10px rgba(24, 24, 24, 0.527);
+    flex: 2;
+}
+.layout{
+    display: flex;
+    gap: 50px;
+}
+.grafico-box{
+    flex: 1;
+    width: 500px;
+    height: 500px;
+    margin: 0 auto;
+}
+.descricao{
+    border-radius: 5px;
+}
+.tabela-lado{
+    display: flex
+    flex-direction: column;
+}
+.fundo{
+    background-color: #ccc;
+    
+}
+
+
+

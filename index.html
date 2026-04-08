@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Controle de Gastos</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "SUA_API_KEY",
+            authDomain: "controle-de-gastos-3b673.firebaseapp.com",
+            projectId: "controle-de-gastos-3b673",
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function salvarTransacao(transacao) {
+            await addDoc(collection(db, "transacoes"), transacao);
+            carregarTransacoes();
+        }
+
+        async function carregarTransacoes() {
+            const querySnapshot = await getDocs(collection(db, "transacoes"));
+
+            let lista = [];
+            const tabela = document.getElementById("tabela-gastos");
+
+            while (tabela.rows.length > 1) {
+                tabela.deleteRow(1);
+            }
+
+            querySnapshot.forEach((doc) => {
+                const item = doc.data();
+                lista.push(item);
+
+                const linha = document.createElement("tr");
+                linha.innerHTML = `<td>${item.descricao}</td><td>${parseFloat(item.valor).toFixed(2)}</td>`;
+                tabela.appendChild(linha);
+            });
+
+            atualizarGrafico(lista);
+        }
+
+        function atualizarGrafico(lista) {
+            let categorias = {};
+
+            lista.forEach(item => {
+                if (!categorias[item.descricao]) {
+                    categorias[item.descricao] = 0;
+                }
+                categorias[item.descricao] += item.valor;
+            });
+
+            const labels = Object.keys(categorias);
+            const data = Object.values(categorias);
+
+            const ctx = document.getElementById('grafico');
+
+            const existente = Chart.getChart(ctx);
+            if (existente) existente.destroy();
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: [
+                            '#ff6384',
+                            '#36a2eb',
+                            '#ffce56',
+                            '#4bc0c0',
+                            '#9966ff',
+                            '#ff9f40'
+                        ]
+                    }]
+                }
+            });
+        }
+
+        window.salvarTransacao = salvarTransacao;
+        window.onload = carregarTransacoes;
+    </script>
+
+</head>
+
+<body>
+    <h1 class="titulo">Controle Financeiro</h1>
+
+    <div class="container">
+        <h1>Meus Gastos</h1>
+
+        <form onsubmit="return false;">
+            <input type="number" id="valor" placeholder="Valor" step="0.01" required>
+
+            <select id="descricao" required>
+                <option value="">Selecione uma descrição</option>
+                <option value="Alimentacao">Alimentação</option>
+                <option value="Transporte">Transporte</option>
+                <option value="Academia">Academia</option>
+                <option value="Lazer">Lazer</option>
+                <option value="Cartao">Cartao</option>
+            </select>
+
+            <button type="button" id="btnSalvar">+</button>
+        </form>
+    </div>
+
+
+    <div class="fundo">
+    <div class="table">
+        <div class="tabela-lado">
+        <h1>Gráfico de Gastos</h1>
+        <table id="tabela-gastos">
+            <tr>
+                <td><strong>Descrição</strong></td>
+                <td><strong>Valor</strong></td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="grafico-box">
+        <canvas id="grafico"></canvas>
+    </div>
+
+    </div>
+    </div>
+    
+
+
+    <script>
+        document.getElementById("btnSalvar").addEventListener("click", async function () {
+            const valor = document.getElementById("valor").value;
+            const descricao = document.getElementById("descricao").value;
+
+            if (!valor || !descricao) {
+                alert("Preencha tudo!");
+                return;
+            }
+
+            const transacao = {
+                valor: parseFloat(valor),
+                descricao: descricao
+            };
+
+            if (typeof window.salvarTransacao === "function") {
+                await window.salvarTransacao(transacao);
+            } else {
+                alert("Aguarde o Firebase carregar!");
+            }
+        });
+    </script>
+
+</body>
+
+</html>
