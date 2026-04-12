@@ -86,14 +86,14 @@ button:hover {
     background: rgb(1, 43, 56);
     padding: 1px;
     border-radius: 10px;
-    border-color: rgb(246, 246, 247);
+    border-color: rgb(1, 43, 56);
     border-width: 2px;
     border-style: solid;
     color: white;
     display: flex;
     gap: 40px;
     align-items: flex-start;
-    box-shadow: rgba(158, 157, 157, 0.39) 0px 0px 10px;
+    box-shadow: 0px 4px 10px rgba(4, 91, 150, 0.527);
 }
 input[type="number"]::-webkit-inner-spin-button{
     -webkit-appearance: none;
@@ -162,8 +162,12 @@ h2{
     flex-direction: column;
 }
 .fundo{
-    background-color: #ccc;
-    
+    background-color: rgba(42, 42, 43, 0.9);
+    margin-left: 50px;
+    margin-right: 50px;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(163, 160, 160, 0.527);
 }
 
 
