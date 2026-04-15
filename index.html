@@ -15,8 +15,9 @@
             apiKey: "SUA_API_KEY",
             authDomain: "controle-de-gastos-3b673.firebaseapp.com",
             projectId: "controle-de-gastos-3b673",
+            
         };
-
+        
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
@@ -40,7 +41,7 @@
                 lista.push(item);
 
                 const linha = document.createElement("tr");
-                linha.innerHTML = `<td>${item.descricao}</td><td>${parseFloat(item.valor).toFixed(2)}</td>`;
+                linha.innerHTML = `<td>${item.descricao}</td><td>R$ ${parseFloat(item.valor).toFixed(2)}</td>`;
                 tabela.appendChild(linha);
             });
 
@@ -48,44 +49,92 @@
         }
 
         function atualizarGrafico(lista) {
-            let categorias = {};
+    let categorias = {};
 
-            lista.forEach(item => {
-                if (!categorias[item.descricao]) {
-                    categorias[item.descricao] = 0;
-                }
-                categorias[item.descricao] += item.valor;
-            });
-
-            const labels = Object.keys(categorias);
-            const data = Object.values(categorias);
-
-            const ctx = document.getElementById('grafico');
-
-            const existente = Chart.getChart(ctx);
-            if (existente) existente.destroy();
-
-            new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        data: data,
-                        backgroundColor: [
-                            '#ff6384',
-                            '#36a2eb',
-                            '#ffce56',
-                            '#4bc0c0',
-                            '#9966ff',
-                            '#ff9f40'
-                        ]
-                    }]
-                }
-            });
+    lista.forEach(item => {
+        if (!categorias[item.descricao]) {
+            categorias[item.descricao] = 0;
         }
+        categorias[item.descricao] += item.valor;
+    });
+
+    const labels = Object.keys(categorias);
+    const data = Object.values(categorias);
+
+    if (data.length === 0) return;
+
+    // =====================
+    // GRÁFICO DE PIZZA
+    // =====================
+    const ctx = document.getElementById('grafico').getContext('2d');
+
+    const existente = Chart.getChart("grafico");
+    if (existente) existente.destroy();
+
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: [
+                    '#ff6384',
+                    '#36a2eb',
+                    '#ffce56',
+                    '#4bc0c0',
+                    '#9966ff',
+                    '#ff9f40'
+                ]
+            }]
+        }
+    });
+
+    // =====================
+    // GRÁFICO DE BARRAS
+    // =====================
+    const ctxBarra = document.getElementById('graficoBarras').getContext('2d');
+
+    const existenteBarra = Chart.getChart("graficoBarras");
+    if (existenteBarra) existenteBarra.destroy();
+
+    let maior = Math.max(...data);
+    let cores = data.map(valor => valor === maior ? '#ff0000' : '#36a2eb');
+
+    new Chart(ctxBarra, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Gastos por categoria',
+                data: data,
+                backgroundColor: cores
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // =====================
+    // TEXTO
+    // =====================
+    let index = data.indexOf(maior);
+    document.getElementById("maiorGastoTexto").innerText =
+        "Maior gasto: " + labels[index] + " (R$ " + maior.toFixed(2) + ")";
+}
+
 
         window.salvarTransacao = salvarTransacao;
-        window.onload = carregarTransacoes;
+        window.carregarTransacoes = carregarTransacoes;
+
+        window.onload = function() {
+            carregarTransacoes();
+        };
+
     </script>
 
 </head>
@@ -123,12 +172,11 @@
                 <td><strong>Valor R$</strong></td>
             </tr>
         </table>
+        </div>
+
     </div>
-    
     <div class="grafico-box">
         <canvas id="grafico"></canvas>
-    </div>
-
     </div>
     </div>
     
@@ -156,6 +204,19 @@
             }
         });
     </script>
+
+<h1>O que eu mais gasto</h1>
+
+<div class="grafico-novo">
+   <h2>Grafico de barras para mostrar o que eu mais gasto</h2>
+   <canvas id="graficoBarras"></canvas>
+   <h3 id="maiorGastoTexto"></h3>
+
+</div>
+
+
+
+
 
 </body>
 

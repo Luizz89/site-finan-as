@@ -13,9 +13,9 @@ body {
 }
 
 .container {
-    max-width: 600px;
-    margin: 90px auto;
-    margin-left: 20px;
+    width: 90%;
+    margin: 70px auto;
+    margin-left: 70px;
     background: rgba(42, 42, 43, 0.9);    
     padding: 20px;
     border-radius: 10px;
@@ -82,17 +82,15 @@ button:hover {
 .table{
     margin: 0 auto;
     width: fit-content;
-    max-height: fit-content;
     background: rgb(1, 43, 56);
     padding: 1px;
-    border-radius: 10px;
+    border-radius: 23px 60px;
     border-color: rgb(1, 43, 56);
     border-width: 2px;
     border-style: solid;
     color: white;
     display: flex;
-    gap: 40px;
-    align-items: flex-start;
+    gap: 900px;
     box-shadow: 0px 4px 10px rgba(4, 91, 150, 0.527);
 }
 input[type="number"]::-webkit-inner-spin-button{
@@ -104,6 +102,8 @@ table{
     background-color: rgb(1, 43, 56);
     border-collapse: collapse;
     margin-top: 2px;
+    width: 900px;
+    
 }
 thead{
     background: rgb(7, 19, 90);
@@ -149,16 +149,18 @@ h2{
     gap: 50px;
 }
 .grafico-box{
-    flex: 1;
-    width: 500px;
-    height: 500px;
+    flex: auto;
     margin: 0 auto;
+    background-color: #cacbcf;
+    border-radius: 60px 23px;
+    box-shadow: 0px 4px 10px rgba(238, 237, 237, 0.527);
+    justify-items: center;
 }
 .descricao{
     border-radius: 5px;
 }
 .tabela-lado{
-    display: flex
+    display: flex;
     flex-direction: column;
 }
 .fundo{
@@ -168,6 +170,19 @@ h2{
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0px 4px 10px rgba(163, 160, 160, 0.527);
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+.grafico-novo{
+    background: rgba(42, 42, 43, 0.9);    
+    padding: 20px;
+    border-radius: 109px;
+    border-color: rgb(94, 94, 94);
+    border-width: 2px;
+    border-style: solid;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
 }
 
 
